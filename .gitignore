@@ -40,3 +40,5 @@ outputs/outbox/*
 # Local vector stores and indexes
 data/vectorstore/
 data/indexes/
+
+Docs.md
