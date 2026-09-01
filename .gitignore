@@ -1,0 +1,42 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local notebooks and OS metadata
+.ipynb_checkpoints/
+.DS_Store
+
+# Runtime outputs
+outputs/logs/*
+outputs/traces/*
+outputs/outbox/*
+!outputs/logs/.gitkeep
+!outputs/traces/.gitkeep
+!outputs/outbox/.gitkeep
+
+# Local vector stores and indexes
+data/vectorstore/
+data/indexes/
