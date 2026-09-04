@@ -36,13 +36,17 @@ def build_in_memory_vectorstore(documents: Iterable[Document]) -> SimpleInMemory
     """Create an in-memory vector store from chunked documents."""
     materialized_documents = list(documents)
     embedding_model = get_embeddings()
-    vectors = embedding_model.embed_documents([document.page_content for document in materialized_documents])
+    vectors = embedding_model.embed_documents(
+        [document.page_content for document in materialized_documents]
+    )
     return SimpleInMemoryVectorStore(documents=materialized_documents, vectors=vectors)
 
 
 def _cosine_similarity(left: list[float], right: list[float]) -> float:
     """Compute cosine similarity without requiring external numeric packages."""
-    numerator = sum(left_value * right_value for left_value, right_value in zip(left, right, strict=True))
+    numerator = sum(
+        left_value * right_value for left_value, right_value in zip(left, right, strict=True)
+    )
     left_norm = sqrt(sum(value * value for value in left))
     right_norm = sqrt(sum(value * value for value in right))
     if left_norm == 0.0 or right_norm == 0.0:

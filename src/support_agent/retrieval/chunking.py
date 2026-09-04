@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
 import re
+from collections.abc import Iterable
 
 from langchain_core.documents import Document
 
@@ -25,7 +25,10 @@ def chunk_documents(
     for document in documents:
         sections = split_markdown_sections(document.page_content)
         for section_index, section in enumerate(sections):
-            section_title = _extract_section_title(section) or document.metadata.get("title", "Untitled")
+            section_title = _extract_section_title(section) or document.metadata.get(
+                "title",
+                "Untitled",
+            )
             for chunk_index, chunk_text in enumerate(
                 _chunk_text(section, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
             ):

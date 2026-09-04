@@ -1,0 +1,6 @@
+{
+  "ticket_id": "fixture-high-risk-001",
+  "message": "Please delete my account and remove all of my data immediately.",
+  "expected_category": "account",
+  "expected_risk": "high"
+}

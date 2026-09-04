@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from hashlib import blake2b
 import os
+from hashlib import blake2b
 
 from langchain_core.embeddings import Embeddings
 

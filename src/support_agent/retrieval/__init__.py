@@ -6,7 +6,11 @@ from support_agent.retrieval.chunking import (
     chunk_documents,
     split_markdown_sections,
 )
-from support_agent.retrieval.embeddings import DEFAULT_EMBEDDING_DIMENSIONS, get_embeddings
+from support_agent.retrieval.embeddings import (
+    DEFAULT_EMBEDDING_DIMENSIONS,
+    LocalHashEmbeddings,
+    get_embeddings,
+)
 from support_agent.retrieval.loader import load_markdown_documents
 from support_agent.retrieval.retriever import (
     DEFAULT_KB_DIR,
@@ -24,6 +28,7 @@ __all__ = [
     "DEFAULT_KB_DIR",
     "DEFAULT_TOP_K",
     "KnowledgeBaseRetriever",
+    "LocalHashEmbeddings",
     "build_in_memory_vectorstore",
     "build_kb_retriever",
     "chunk_documents",
