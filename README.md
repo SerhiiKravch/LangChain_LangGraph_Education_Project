@@ -155,6 +155,7 @@ More detailed notes live here:
 
 - [Architecture Notes](./docs/architecture.md)
 - [Project Goals Notes](./docs/project-goals.md)
+- [Classification Taxonomy](./docs/classification-taxonomy.md)
 - [Extended Product Notes](./Docs.md)
 
 ## Roadmap
