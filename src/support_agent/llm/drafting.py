@@ -7,7 +7,7 @@ from collections.abc import Iterable, Mapping
 from langchain_core.documents import Document
 from langchain_core.runnables import RunnableLambda
 
-from support_agent.schemas import DraftCitation, DraftResponse, TicketCategory
+from support_agent.schemas import DraftCitation, DraftResponse, SourceSnippet, TicketCategory
 
 DraftInput = Mapping[str, object]
 
@@ -39,6 +39,7 @@ def draft_response(
 
     context_summary = _summarize_context(context_documents)
     citations = _build_citations(context_documents)
+    source_snippets = _build_source_snippets(context_documents)
 
     return DraftResponse(
         message=(
@@ -49,6 +50,7 @@ def draft_response(
             "account-specific action is taken."
         ),
         citations=citations,
+        source_snippets=source_snippets,
         needs_more_context=False,
     )
 
@@ -112,6 +114,38 @@ def _build_citations(documents: list[Document]) -> list[DraftCitation]:
     return citations
 
 
+def _build_source_snippets(documents: list[Document]) -> list[SourceSnippet]:
+    """Build serializable source snippets from retrieved document chunks."""
+    snippets: list[SourceSnippet] = []
+
+    for document in documents:
+        content = document.page_content.strip()
+        document_id = str(document.metadata.get("document_id", "")).strip()
+        title = str(document.metadata.get("title", "")).strip()
+
+        if not content or not document_id or not title:
+            continue
+
+        section_title = document.metadata.get("section_title")
+        source = document.metadata.get("source")
+        section_index = _optional_int(document.metadata.get("section_index"))
+        chunk_index = _optional_int(document.metadata.get("chunk_index"))
+
+        snippets.append(
+            SourceSnippet(
+                content=content,
+                document_id=document_id,
+                title=title,
+                section_title=str(section_title) if section_title is not None else None,
+                source=str(source) if source is not None else None,
+                section_index=section_index,
+                chunk_index=chunk_index,
+            )
+        )
+
+    return snippets
+
+
 def _summarize_context(documents: list[Document]) -> str:
     """Create a compact deterministic summary from retrieved chunks."""
     snippets = [_first_content_line(document.page_content) for document in documents]
@@ -132,3 +166,11 @@ def _first_content_line(text: str) -> str:
             return stripped.removeprefix("- ").strip()
 
     return ""
+
+
+def _optional_int(value: object) -> int | None:
+    """Convert optional metadata values to integers when available."""
+    if value is None:
+        return None
+
+    return int(value)

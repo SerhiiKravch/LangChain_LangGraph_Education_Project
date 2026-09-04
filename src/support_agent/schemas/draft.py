@@ -16,6 +16,20 @@ class DraftCitation(BaseModel):
     source: str | None = Field(default=None, description="Optional source path or URI.")
 
 
+class SourceSnippet(BaseModel):
+    """Retrieved source snippet stored alongside a draft response."""
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    content: str = Field(min_length=1, description="Retrieved source text used for drafting.")
+    document_id: str = Field(min_length=1, description="Knowledge-base document identifier.")
+    title: str = Field(min_length=1, description="Human-readable source title.")
+    section_title: str | None = Field(default=None, description="Optional source section title.")
+    source: str | None = Field(default=None, description="Optional source path or URI.")
+    section_index: int | None = Field(default=None, description="Optional section index.")
+    chunk_index: int | None = Field(default=None, description="Optional chunk index.")
+
+
 class DraftResponse(BaseModel):
     """Grounded response draft prepared from retrieved context."""
 
@@ -25,6 +39,10 @@ class DraftResponse(BaseModel):
     citations: list[DraftCitation] = Field(
         default_factory=list,
         description="Knowledge-base sources used to prepare the draft.",
+    )
+    source_snippets: list[SourceSnippet] = Field(
+        default_factory=list,
+        description="Retrieved source snippets stored for traceability and review.",
     )
     needs_more_context: bool = Field(
         default=False,
