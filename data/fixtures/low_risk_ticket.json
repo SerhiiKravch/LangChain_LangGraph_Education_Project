@@ -1,0 +1,6 @@
+{
+  "ticket_id": "fixture-low-risk-001",
+  "message": "Can you explain the difference between the Pro and Team plans?",
+  "expected_category": "pricing",
+  "expected_risk": "low"
+}

@@ -14,13 +14,14 @@ authors = [
 ]
 dependencies = [
   "langchain>=0.3.0",
+  "langchain-core>=0.3.0",
   "langgraph>=0.2.0",
   "pydantic>=2.9.0",
   "python-dotenv>=1.0.1",
   "typing-extensions>=4.12.2",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
   "pytest>=8.3.0",
   "ruff>=0.6.9",

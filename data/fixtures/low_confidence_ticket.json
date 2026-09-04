@@ -1,0 +1,6 @@
+{
+  "ticket_id": "fixture-low-confidence-001",
+  "message": "I have a very specific custom enterprise exception from last year. Can you confirm it?",
+  "expected_category": "other",
+  "expected_risk": "needs_review"
+}

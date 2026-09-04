@@ -850,13 +850,14 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "langchain" },
+    { name = "langchain-core" },
     { name = "langgraph" },
     { name = "pydantic" },
     { name = "python-dotenv" },
     { name = "typing-extensions" },
 ]
 
-[package.optional-dependencies]
+[package.dev-dependencies]
 dev = [
     { name = "pytest" },
     { name = "ruff" },
@@ -865,14 +866,18 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "langchain", specifier = ">=0.3.0" },
+    { name = "langchain-core", specifier = ">=0.3.0" },
     { name = "langgraph", specifier = ">=0.2.0" },
     { name = "pydantic", specifier = ">=2.9.0" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3.0" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.6.9" },
     { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
-provides-extras = ["dev"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=8.3.0" },
+    { name = "ruff", specifier = ">=0.6.9" },
+]
 
 [[package]]
 name = "tenacity"
