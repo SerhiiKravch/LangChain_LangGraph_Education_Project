@@ -5,6 +5,7 @@ from __future__ import annotations
 from hashlib import blake2b
 
 from support_agent.schemas import DraftResponse, SendResponseResult, SupportTicket
+from support_agent.storage import OutboxStore
 
 DEFAULT_RECIPIENT = "customer"
 
@@ -14,6 +15,7 @@ def send_response(
     ticket: SupportTicket,
     draft: DraftResponse,
     recipient: str | None = None,
+    outbox_store: OutboxStore | None = None,
 ) -> SendResponseResult:
     """Record a mocked customer response send operation."""
     target_recipient = (recipient or ticket.customer_id or DEFAULT_RECIPIENT).strip()
@@ -24,12 +26,13 @@ def send_response(
     if not message:
         raise ValueError("draft message cannot be blank")
 
-    return SendResponseResult(
+    result = SendResponseResult(
         ticket_id=ticket.ticket_id,
         message_id=_message_id(ticket_id=ticket.ticket_id, message=message),
         recipient=target_recipient,
         message=message,
     )
+    return (outbox_store or OutboxStore()).append_once(result)
 
 
 def _message_id(*, ticket_id: str, message: str) -> str:

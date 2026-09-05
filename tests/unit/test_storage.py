@@ -20,6 +20,16 @@ def test_outbox_store_appends_and_reads_sent_responses(tmp_path) -> None:
     assert store.list() == [result]
 
 
+def test_outbox_store_append_once_returns_existing_ticket_result(tmp_path) -> None:
+    store = OutboxStore(tmp_path / "outbox" / "messages.jsonl")
+    first = _send_result(ticket_id="ticket-1", message_id="mock-msg-1")
+    second = _send_result(ticket_id="ticket-1", message_id="mock-msg-2")
+
+    assert store.append_once(first) == first
+    assert store.append_once(second) == first
+    assert store.list() == [first]
+
+
 def test_outbox_store_returns_empty_list_when_file_is_missing(tmp_path) -> None:
     store = OutboxStore(tmp_path / "missing" / "messages.jsonl")
 

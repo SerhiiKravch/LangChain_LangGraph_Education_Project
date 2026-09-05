@@ -24,6 +24,14 @@ class OutboxStore:
 
         return result
 
+    def append_once(self, result: SendResponseResult) -> SendResponseResult:
+        """Append a sent response result only when the ticket has not been sent."""
+        existing_result = self.find_by_ticket_id(result.ticket_id)
+        if existing_result is not None:
+            return existing_result
+
+        return self.append(result)
+
     def list(self) -> list[SendResponseResult]:
         """Read all sent response results from the JSONL outbox."""
         if not self.path.exists():
