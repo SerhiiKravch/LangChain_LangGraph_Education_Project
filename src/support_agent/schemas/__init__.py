@@ -9,6 +9,7 @@ from support_agent.schemas.review import (
     HumanReviewStatus,
 )
 from support_agent.schemas.risk import RiskAssessment, RiskLevel, RoutingDecision
+from support_agent.schemas.send import SendResponseResult, SendStatus
 from support_agent.schemas.state import TicketState, WorkflowStatus
 from support_agent.schemas.ticket import SupportTicket, TicketCategory, TicketInput
 
@@ -22,6 +23,8 @@ __all__ = [
     "RiskAssessment",
     "RiskLevel",
     "RoutingDecision",
+    "SendResponseResult",
+    "SendStatus",
     "SupportTicket",
     "SourceSnippet",
     "TicketCategory",
