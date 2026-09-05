@@ -4,7 +4,9 @@ from support_agent.graph.nodes import (
     assess_risk_node,
     classify_ticket_node,
     draft_response_node,
+    human_review_node,
     ingest_ticket_node,
+    resume_after_review_node,
     retrieve_context_node,
 )
 from support_agent.graph.routing import (
@@ -22,7 +24,9 @@ __all__ = [
     "assess_risk_node",
     "classify_ticket_node",
     "draft_response_node",
+    "human_review_node",
     "ingest_ticket_node",
+    "resume_after_review_node",
     "retrieve_context_node",
     "route_after_risk_assessment",
 ]
