@@ -8,6 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from support_agent.schemas.classification import TicketClassification
 from support_agent.schemas.draft import DraftResponse, SourceSnippet
+from support_agent.schemas.review import HumanReviewState
 from support_agent.schemas.risk import RiskAssessment
 from support_agent.schemas.ticket import SupportTicket
 
@@ -51,6 +52,10 @@ class TicketState(BaseModel):
     risk_assessment: RiskAssessment | None = Field(
         default=None,
         description="Risk assessment used for routing.",
+    )
+    review: HumanReviewState | None = Field(
+        default=None,
+        description="Human review state when workflow execution is paused for review.",
     )
     send_attempts: int = Field(
         default=0,
