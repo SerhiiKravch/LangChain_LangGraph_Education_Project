@@ -7,6 +7,7 @@ from support_agent.storage.checkpoints import (
     StateCheckpoint,
 )
 from support_agent.storage.outbox import DEFAULT_OUTBOX_PATH, OutboxStore
+from support_agent.storage.state_store import TicketStateStore
 
 __all__ = [
     "AuditEvent",
@@ -17,4 +18,5 @@ __all__ = [
     "DEFAULT_OUTBOX_PATH",
     "OutboxStore",
     "StateCheckpoint",
+    "TicketStateStore",
 ]
