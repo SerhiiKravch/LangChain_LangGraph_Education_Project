@@ -79,19 +79,66 @@ def test_send_response_is_idempotent_by_ticket_id(tmp_path) -> None:
     assert outbox_store.list() == [first]
 
 
+def test_repeated_send_keeps_original_recipient_and_message(tmp_path) -> None:
+    ticket = _ticket(customer_id="customer-123")
+    outbox_store = OutboxStore(tmp_path / "outbox.jsonl")
+
+    first = send_response(
+        ticket=ticket,
+        draft=DraftResponse(message="Approved response."),
+        outbox_store=outbox_store,
+    )
+    second = send_response(
+        ticket=ticket,
+        draft=DraftResponse(message="Edited after send."),
+        recipient="alternate-recipient",
+        outbox_store=outbox_store,
+    )
+
+    assert second == first
+    assert second.recipient == "customer-123"
+    assert second.message == "Approved response."
+    assert len(outbox_store.list()) == 1
+
+
 def test_send_response_rejects_blank_recipient(tmp_path) -> None:
+    outbox_store = OutboxStore(tmp_path / "outbox.jsonl")
+
     with pytest.raises(ValueError, match="recipient cannot be blank"):
         send_response(
             ticket=_ticket(),
             draft=DraftResponse(message="Valid response."),
             recipient="   ",
-            outbox_store=OutboxStore(tmp_path / "outbox.jsonl"),
+            outbox_store=outbox_store,
         )
+
+    assert outbox_store.list() == []
 
 
 def test_send_response_schema_rejects_blank_message() -> None:
     with pytest.raises(ValidationError):
         DraftResponse(message="   ")
+
+
+def test_send_response_propagates_outbox_failures(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path,
+) -> None:
+    outbox_store = OutboxStore(tmp_path / "outbox.jsonl")
+
+    def raise_storage_error(_result) -> None:
+        raise RuntimeError("outbox unavailable")
+
+    monkeypatch.setattr(outbox_store, "append_once", raise_storage_error)
+
+    with pytest.raises(RuntimeError, match="outbox unavailable"):
+        send_response(
+            ticket=_ticket(),
+            draft=DraftResponse(message="Valid response."),
+            outbox_store=outbox_store,
+        )
+
+    assert outbox_store.list() == []
 
 
 def _ticket(*, customer_id: str | None = None) -> SupportTicket:
