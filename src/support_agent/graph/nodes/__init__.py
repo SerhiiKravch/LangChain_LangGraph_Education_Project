@@ -5,6 +5,7 @@ from support_agent.graph.nodes.classify_ticket import classify_ticket_node
 from support_agent.graph.nodes.draft_response import draft_response_node
 from support_agent.graph.nodes.human_review import human_review_node
 from support_agent.graph.nodes.ingest_ticket import ingest_ticket_node
+from support_agent.graph.nodes.resume_review import resume_after_review_node
 from support_agent.graph.nodes.retrieve_context import retrieve_context_node
 
 __all__ = [
@@ -13,5 +14,6 @@ __all__ = [
     "draft_response_node",
     "human_review_node",
     "ingest_ticket_node",
+    "resume_after_review_node",
     "retrieve_context_node",
 ]

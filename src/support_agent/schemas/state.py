@@ -22,6 +22,7 @@ class WorkflowStatus(StrEnum):
     DRAFTED = "drafted"
     RISK_ASSESSED = "risk_assessed"
     WAITING_FOR_REVIEW = "waiting_for_review"
+    REVIEWED = "reviewed"
     SENT = "sent"
     CLOSED = "closed"
     FAILED = "failed"
