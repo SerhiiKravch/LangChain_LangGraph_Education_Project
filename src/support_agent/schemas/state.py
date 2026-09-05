@@ -10,6 +10,7 @@ from support_agent.schemas.classification import TicketClassification
 from support_agent.schemas.draft import DraftResponse, SourceSnippet
 from support_agent.schemas.review import HumanReviewState
 from support_agent.schemas.risk import RiskAssessment
+from support_agent.schemas.send import SendResponseResult
 from support_agent.schemas.ticket import SupportTicket
 
 
@@ -62,6 +63,10 @@ class TicketState(BaseModel):
         default=0,
         ge=0,
         description="Number of attempted send operations.",
+    )
+    send_result: SendResponseResult | None = Field(
+        default=None,
+        description="Result of the send operation when a response has been sent.",
     )
     error: str | None = Field(
         default=None,

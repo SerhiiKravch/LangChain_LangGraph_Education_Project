@@ -284,3 +284,81 @@ Learning focus: final hardening and interview readiness.
 - After PRs 2 to 4, the project gives a solid practical base in `LangChain`.
 - After PRs 6 to 9, the project becomes a strong example of `LangGraph` workflow design.
 - After PRs 10 to 12, the repository is ready for demos, portfolio use, and interview discussion.
+
+## Follow-Up Refactoring and Infrastructure Roadmap
+
+Use this follow-up roadmap after the main MVP flow exists. These PRs focus on making the project easier to run, easier to explain, and closer to a production-style agent workflow.
+
+### PR 13: `feat/compiled-langgraph-runner`
+
+Learning focus: moving from manually chained node calls to a real compiled `LangGraph` workflow.
+
+1. `feat: add graph builder with state graph nodes`
+   Learning stage: assembling individual node functions into a `StateGraph`.
+2. `feat: add conditional edges for risk and review routing`
+   Learning stage: modeling branching behavior with conditional graph edges.
+3. `feat: add send response node using retry policy`
+   Learning stage: connecting graph execution to controlled side effects.
+4. `test: add compiled graph integration tests`
+   Learning stage: validating the real graph runner end to end.
+
+### PR 14: `chore/test-fixtures-and-error-handling`
+
+Learning focus: reducing test duplication and standardizing workflow failure behavior.
+
+1. `test: move shared model fixtures into conftest`
+   Learning stage: organizing reusable test data and reducing duplicated setup.
+2. `test: add reusable support ticket and draft factories`
+   Learning stage: building maintainable test helpers for workflow scenarios.
+3. `feat: add centralized workflow error handling helper`
+   Learning stage: consistently mapping exceptions to `WorkflowStatus.FAILED`.
+4. `test: add error handling tests for graph nodes`
+   Learning stage: validating failure paths as first-class workflow behavior.
+
+### PR 15: `feat/audit-events-and-runtime-config`
+
+Learning focus: making workflow execution observable and configurable.
+
+1. `feat: add application config model`
+   Learning stage: centralizing paths, retrieval settings, retry attempts, and model provider configuration.
+2. `feat: record audit events for workflow transitions`
+   Learning stage: tracing important state changes such as classification, review, send, and failure.
+3. `feat: add audit logging to send and review flows`
+   Learning stage: observing side effects and human decisions.
+4. `test: add audit and config integration tests`
+   Learning stage: testing configuration-driven execution and audit artifacts.
+
+### PR 16: `feat/cli-demo-runner`
+
+Learning focus: turning the internal workflow into a demo-friendly user-facing flow.
+
+1. `feat: add cli command to run a support ticket through the graph`
+   Learning stage: exposing workflow execution through a simple interface.
+2. `feat: add cli command to inspect ticket status and review state`
+   Learning stage: making persisted state visible during demos.
+3. `feat: add cli command to resume a reviewed ticket`
+   Learning stage: demonstrating pause and resume from the command line.
+4. `test: add e2e cli tests for low-risk and high-risk flows`
+   Learning stage: validating the system from the user entry point.
+
+### PR 17: `chore/github-and-docs-polish`
+
+Learning focus: repository readiness for GitHub, CI, and interview presentation.
+
+1. `docs: update readme current status and run examples`
+   Learning stage: keeping project documentation aligned with the implemented system.
+2. `ci: add github actions for uv ruff and pytest`
+   Learning stage: running automated quality checks on every PR.
+3. `docs: add architecture diagrams for models and state flow`
+   Learning stage: explaining the project visually and clearly.
+4. `chore: clean generated pycache artifacts from workspace`
+   Learning stage: keeping the repository and local project tree clean.
+
+### Recommended Follow-Up Order
+
+1. Compiled `LangGraph` runner
+2. Send response graph node
+3. Shared fixtures and error handling
+4. Runtime config and audit events
+5. CLI demo runner
+6. README, diagrams, CI, and repository polish
